@@ -21,3 +21,5 @@ jobs:
       provider: cargo
       on:
         tags: true
+      token:
+        secure: V3V2oHwFzq+xcgXgKmgK66z9HTlHIB/wc522jl97VnnfrC7P47FI9SGkXdEFcv3nDVP5E4JkU+oD5Nlef30WlwrjMOJQktK4/NYZZ3FB3nRr4fJQN5jVgQiotWHTaPw/CMXBCU9axy65Py0VxyQuxTBvjxRS4tSaQ1e3LOh4Ksx+uBs3+YaZ6Qpnk9xLwj3rPFlFYuUI/AbTIY5+e23CNEcxS1ljMS3xOd9+Cv5UE25m0TDcTcC99SlyeuU6BQ0a5NbsbkNk3ROXb1I7NqQ1/+2lImjSkxI1DpAms9/0XkBltZeLDMbvlc3NIbCBsVlx9EnlJ0vAaeRsla4JGSpwaO+pO4tUpkhwOk7Q5mVOZslQeKhUmm5Jen836S/rs03KjtuYU+j7dHu96SoidqbzqZnH64k6RWka9pPCRuJkWHP8/ynlK5q10wsD4Kt4viV+kVONuYLb3UmJ58jYlcNO2H8RlQLb8vF1wMBDl6mAEVt89anX8ynlIOw3FPmbzy0Y76/murv3Ord2EqIwGR3U6XopFDEImdvR6YTarRo2DNgPchd1z51UrOHQ+srlDodtHZLPMyLLqcOi3BMdfzJHUBs+xaQUFrSwlcKcXaPYvv3O5GKrrYIkwhiDJwQRzXESxD3OnQxnnueAjLeqMUUXLUY/w51oQIfA01+V/Y77MiE=
