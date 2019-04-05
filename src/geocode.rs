@@ -7,26 +7,26 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Deserialize)]
 pub struct ReverseGeocodeResponse {
     /// This field contains information about the response.
-    info: Info,
-    options: Options,
-    results: Vec<ReverseGeocodeResult>,
+    pub info: Info,
+    pub options: Options,
+    pub results: Vec<ReverseGeocodeResult>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct GeocodeResponse {
     /// This field contains information about the response.
-    info: Info,
-    options: Options,
-    results: Vec<GeocodeResult>,
+    pub info: Info,
+    pub options: Options,
+    pub results: Vec<GeocodeResult>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Info {
     /// HTTP status codes
     /// See https://developer.mapquest.com/documentation/geocoding-api/status-codes/
-    status_code: u32,
+    pub status_code: Option<u32>,
     /// The messages subfield is an array of error messages that describe the status
-    messages: Vec<String>,
+    pub messages: Vec<String>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -41,8 +41,8 @@ pub struct Options {
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct LatLng {
-    pub lat: f32,
-    pub lng: f32,
+    pub lat: Option<f32>,
+    pub lng: Option<f32>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -78,7 +78,7 @@ impl<'de> Deserialize<'de> for LocationType {
         D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        match s.as_str() {
+        match s.to_lowercase().as_str() {
             "s" => Ok(LocationType::Stop),
             "v" => Ok(LocationType::Via),
             v => Err(D::Error::unknown_variant(&v, &["s", "v"])),
@@ -100,7 +100,7 @@ impl<'de> Deserialize<'de> for SideOfStreet {
         D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        match s.as_str() {
+        match s.to_lowercase().as_str() {
             "r" => Ok(SideOfStreet::Right),
             "l" => Ok(SideOfStreet::Left),
             "m" => Ok(SideOfStreet::Mixed),
@@ -116,19 +116,19 @@ pub struct Location {
     pub street: String,
     /// Neighborhood Name
     #[serde(rename = "adminArea6")]
-    pub admin_area_6: String,
+    pub admin_area_6: Option<String>,
     /// City name
     #[serde(rename = "adminArea5")]
-    pub admin_area_5: String,
+    pub admin_area_5: Option<String>,
     /// County name
     #[serde(rename = "adminArea4")]
-    pub admin_area_4: String,
+    pub admin_area_4: Option<String>,
     /// State name
     #[serde(rename = "adminArea3")]
-    pub admin_area_3: String,
+    pub admin_area_3: Option<String>,
     /// Country name
-    #[serde(rename = "adminArea4")]
-    pub admin_area_1: String,
+    #[serde(rename = "adminArea1")]
+    pub admin_area_1: Option<String>,
 
     /// Type of location.
     #[serde(rename = "type")]
@@ -188,6 +188,7 @@ impl<'a> Client<'a> {
                 ("location", &format!("{:},{}", lat, lng)),
             ])
             .send()?
+            .error_for_status()?
             .json()?)
     }
 
@@ -199,6 +200,7 @@ impl<'a> Client<'a> {
             .get(&format!("{}/address", Self::BASE_URL))
             .query(&[("key", self.api_key), ("location", address)])
             .send()?
+            .error_for_status()?
             .json()?)
     }
 }

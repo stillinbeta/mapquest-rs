@@ -1,6 +1,7 @@
 extern crate reqwest;
 extern crate serde_json;
 
+#[derive(Debug)]
 pub enum Error {
     ReqwestError(reqwest::Error),
     SerdeError(serde_json::Error),
